@@ -4,7 +4,7 @@ export function saveToDos(toDos = toDos) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(toDos))
 };
 
-export function loadProjects() {
+export function loadtoDos() {
     const storedToDos = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
     if (storedToDos) {

@@ -1,4 +1,4 @@
-import {saveToDos} from "./JSON";
+import { saveToDos } from "./JSON";
 
 const taskManager = (function() {
     let toDos = [];

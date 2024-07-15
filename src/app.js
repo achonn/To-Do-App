@@ -1,4 +1,4 @@
 import './styles/style.css'
-import { loadProjects } from './JSON'
+import { loadtoDos } from './JSON'
 
-document.addEventListener("DOMContentLoaded", loadProjects);
+document.addEventListener("DOMContentLoaded", loadtoDos);
