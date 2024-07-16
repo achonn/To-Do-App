@@ -6,6 +6,8 @@ const DOMManipulator = (function(){
         const toggleTaskComplete = function(index) {
             toDos[index].completed = !toDos[index].completed;
             taskManager.saveToDos(toDos);
+
+            updateProgressBar();
             renderToDos();
         }; 
         const taskList = document.querySelector('.taskList');
@@ -30,6 +32,7 @@ const DOMManipulator = (function(){
             const deleteButton = listItem.querySelector('.trash');
             deleteButton.addEventListener('click', function() {
                 taskManager.deleteToDo(index);
+                updateProgressBar();
                 renderToDos();
             });
 
@@ -39,6 +42,7 @@ const DOMManipulator = (function(){
                 toDoTitle.value = toDos[index].toDoTitle;
 
                 toDos.splice(index,1);
+                updateProgressBar();
                 renderToDos();
             });
         })
@@ -54,16 +58,24 @@ const DOMManipulator = (function(){
                 renderToDos();
             };
         });
+        updateProgressBar();
     };
 
 
     const updateProgressBar = function() {
-        
+        const completedTasks = toDos.filter(task => task.completed).length;
+        const totalTasks = toDos.length;
+        const progress = (completedTasks / totalTasks) * 100;
+        const progressBar = document.getElementById('progress');
+        progressBar.style.width = `${progress}%`;
+
+        document.getElementById('numbers').innerText = `${completedTasks / totalTasks}`;
     }
 
     const initialize = function() {
         renderToDos();
         appendToDos();
+        updateProgressBar();
     };
 
     return { initialize }
