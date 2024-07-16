@@ -9,7 +9,9 @@ export function loadtoDos() {
 
     if (storedToDos) {
         storedToDos.forEach(task => {
-            tasks.push(task);
+            toDos.push(task);
         })
-    }
+    };
+
+    return storedToDos || [];
 }
