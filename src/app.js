@@ -1,4 +1,4 @@
 import './styles/style.css'
-import DOMManipulator from './ui'
+import DOMManipulator from './domManipulator';
 
 DOMManipulator.initialize();
