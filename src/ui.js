@@ -5,7 +5,9 @@ const DOMManipulator = (function(){
         const toDos = taskManager.getToDos();
         const toggleTaskComplete = function(index) {
             toDos[index].completed = !toDos[index].completed;
-        }
+            taskManager.saveToDos(toDos);
+            renderToDos();
+        }; 
         const taskList = document.querySelector('.taskList');
         taskList.innerHTML = '';
 
@@ -22,14 +24,23 @@ const DOMManipulator = (function(){
                     <div class ="trash"><i class="fa-solid fa-trash"></i></div>
                 </div>
             </div>`;
-            listItem.addEventListener('change', () => toggleTaskComplete(index))
+            listItem.querySelector('.checkbox').addEventListener('change', () => toggleTaskComplete(index));
             taskList.appendChild(listItem);
 
-            const deleteButton = document.querySelector('.trash');
+            const deleteButton = listItem.querySelector('.trash');
             deleteButton.addEventListener('click', function() {
                 taskManager.deleteToDo(index);
                 renderToDos();
-            })
+            });
+
+            const editButton = listItem.querySelector('.edit');
+            editButton.addEventListener('click', function() {
+                const toDoTitle = document.querySelector('.inputToDo');
+                toDoTitle.value = toDos[index].toDoTitle;
+
+                toDos.splice(index,1);
+                renderToDos();
+            });
         })
     };
 
@@ -41,10 +52,14 @@ const DOMManipulator = (function(){
             if (toDoTitle.trim()) {
                 taskManager.addToDo(toDoTitle);
                 renderToDos();
-            }
+            };
         });
     };
 
+
+    const updateProgressBar = function() {
+        
+    }
 
     const initialize = function() {
         renderToDos();

@@ -131,6 +131,11 @@ button {
     height: 20px;
 }
 
+.completed > p{
+    text-decoration: line-through;
+    color: var(--teal);
+}
+
 .icons{
     display: flex;
     margin: 0px 10px;

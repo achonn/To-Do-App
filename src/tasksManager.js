@@ -23,7 +23,7 @@ const taskManager = (function() {
     };
 
 
-    return {addToDo,deleteToDo,getToDos};
+    return { addToDo, deleteToDo, getToDos };
 })();
 
 export default taskManager
