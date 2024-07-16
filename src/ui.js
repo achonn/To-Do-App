@@ -20,6 +20,16 @@ const DOMManipulator = (function(){
                 </div>
             </div>`;
 
+            const checkbox = listItem.querySelector('.checkbox');
+            checkbox.checked = toDo.completed;
+            
+            checkbox.addEventListener('change', () => {
+                toDo.completed = !toDo.completed;
+                taskManager.updateToDo(index, toDo);
+                renderToDos();
+                updateProgressBar();
+            });
+
             listItem.querySelector('.checkbox').addEventListener('change', () => {
                 toDo.completed = !toDo.completed;
                 taskManager.updateToDo(index, toDo);
