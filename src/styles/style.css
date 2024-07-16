@@ -102,3 +102,50 @@ button {
     outline: none;
     cursor: pointer;
 }
+
+.toDoItem {
+    display: flex;
+    background: var(--secondaryBackground);
+    padding: 10px;
+    border-radius: 10px;
+    justify-content: space-between;
+}
+
+.taskList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 30px;
+    width: 100%;
+    list-style: none;
+}
+
+.task {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.task input {
+    width: 20px;
+    height: 20px;
+}
+
+.icons{
+    display: flex;
+    margin: 0px 10px;
+    cursor: pointer;
+}
+
+.icons > div {
+    width: 24px;
+    height: 24px;
+}
+
+.trash {
+    transition: all 0.3s ease;
+}
+
+.trash:hover {
+    color: red;
+}

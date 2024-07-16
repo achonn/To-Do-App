@@ -3,20 +3,26 @@ import taskManager from "./tasksManager";
 const DOMManipulator = (function(){
     const renderToDos = function() {
         const toDos = taskManager.getToDos();
+        const toggleTaskComplete = function(index) {
+            toDos[index].completed = !toDos[index].completed;
+        }
         const taskList = document.querySelector('.taskList');
         taskList.innerHTML = '';
 
         toDos.forEach((toDo, index) => {
             const listItem = document.createElement('li');
             listItem.innerHTML = `
-            <div class="toDoItem" ${toDo.completed ? "completed" : ""}>
-                <input type="checkbox" class="checkbox" ${toDo.completed ? "checked" : ""}>
-                <p>${toDo.toDoTitle}</p>
+            <div class="toDoItem">
+                <div class="task ${toDo.completed ? "completed" : ""}">
+                    <input type="checkbox" class="checkbox" ${toDo.completed ? "checked" : ""}"/>
+                    <p>${toDo.toDoTitle}</p>
+                </div>
                 <div class="icons">
-                    <button class = "edit"><i class="fa-regular fa-pen-to-square" "edit"></i></button>
-                    <button class = "trash"><i class="fa-solid fa-trash"></i></button>
+                    <div class ="edit"><i class="fa-regular fa-pen-to-square" "edit"></i></div>
+                    <div class ="trash"><i class="fa-solid fa-trash"></i></div>
                 </div>
             </div>`;
+            listItem.addEventListener('change', () => toggleTaskComplete(index))
             taskList.appendChild(listItem);
 
             const deleteButton = document.querySelector('.trash');
@@ -29,7 +35,8 @@ const DOMManipulator = (function(){
 
     const appendToDos = function() {
         const appendButton = document.querySelector('#appendNewTaskButton');
-        appendButton.addEventListener('click', function() {
+        appendButton.addEventListener('click', function(event) {
+            event.preventDefault();
             const toDoTitle = (document.querySelector('.inputToDo')).value;
             if (toDoTitle.trim()) {
                 taskManager.addToDo(toDoTitle);
