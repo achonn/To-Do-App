@@ -3,13 +3,6 @@ import taskManager from "./tasksManager";
 const DOMManipulator = (function(){
     const renderToDos = function() {
         const toDos = taskManager.getToDos();
-        const toggleTaskComplete = function(index) {
-            toDos[index].completed = !toDos[index].completed;
-            taskManager.saveToDos(toDos);
-
-            updateProgressBar();
-            renderToDos();
-        }; 
         const taskList = document.querySelector('.taskList');
         taskList.innerHTML = '';
 
@@ -26,52 +19,56 @@ const DOMManipulator = (function(){
                     <div class ="trash"><i class="fa-solid fa-trash"></i></div>
                 </div>
             </div>`;
-            listItem.querySelector('.checkbox').addEventListener('change', () => toggleTaskComplete(index));
-            taskList.appendChild(listItem);
 
-            const deleteButton = listItem.querySelector('.trash');
-            deleteButton.addEventListener('click', function() {
+            listItem.querySelector('.checkbox').addEventListener('change', () => {
+                toDo.completed = !toDo.completed;
+                taskManager.updateToDo(index, toDo);
+                updateProgressBar();
+                renderToDos();
+            });
+
+            listItem.querySelector('.trash').addEventListener('click', () => {
                 taskManager.deleteToDo(index);
                 updateProgressBar();
                 renderToDos();
             });
 
-            const editButton = listItem.querySelector('.edit');
-            editButton.addEventListener('click', function() {
+            listItem.querySelector('.edit').addEventListener('click', () => {
                 const toDoTitle = document.querySelector('.inputToDo');
-                toDoTitle.value = toDos[index].toDoTitle;
+                toDoTitle.value = toDo.toDoTitle;
 
-                toDos.splice(index,1);
+                toDos.splice(index, 1);
                 updateProgressBar();
                 renderToDos();
             });
-        })
+
+            taskList.appendChild(listItem);
+        });
     };
 
     const appendToDos = function() {
         const appendButton = document.querySelector('#appendNewTaskButton');
-        appendButton.addEventListener('click', function(event) {
+        appendButton.addEventListener('click', (event) => {
             event.preventDefault();
-            const toDoTitle = (document.querySelector('.inputToDo')).value;
+            const toDoTitle = document.querySelector('.inputToDo').value;
             if (toDoTitle.trim()) {
                 taskManager.addToDo(toDoTitle);
                 renderToDos();
-            };
+            }
         });
         updateProgressBar();
     };
 
-
     const updateProgressBar = function() {
+        const toDos = taskManager.getToDos();
         const completedTasks = toDos.filter(task => task.completed).length;
         const totalTasks = toDos.length;
-        const progress = (completedTasks / totalTasks) * 100;
+        const progress = totalTasks ? (completedTasks / totalTasks) * 100 : 0;
         const progressBar = document.getElementById('progress');
         progressBar.style.width = `${progress}%`;
+        document.getElementById('numbers').innerText = `${completedTasks} / ${totalTasks}`;
 
-        document.getElementById('numbers').innerText = `${completedTasks / totalTasks}`;
-
-        if (toDos.length && completedTasks == totalTasks) {
+        if (totalTasks && completedTasks === totalTasks) {
             blastConfetti();
         }
     };

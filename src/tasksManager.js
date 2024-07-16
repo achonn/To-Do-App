@@ -22,8 +22,13 @@ const taskManager = (function() {
         return toDos
     };
 
+    const updateToDo = function(index, updatedToDo) {
+        toDos[index] = updatedToDo;
+        saveToDos(toDos);
+    };
 
-    return { addToDo, deleteToDo, getToDos };
+
+    return { addToDo, deleteToDo, getToDos, updateToDo };
 })();
 
 export default taskManager
