@@ -1,7 +1,7 @@
 import taskManager from "./tasksManager";
 
-const DOMManipulator = {
-    renderToDos() {
+const DOMManipulator = (function(){
+    const renderToDos = function() {
         const toDos = taskManager.getToDos();
         const taskList = document.querySelector('.taskList');
         taskList.innerHTML = '';
@@ -13,34 +13,38 @@ const DOMManipulator = {
                 <input type="checkbox" class="checkbox" ${toDo.completed ? "checked" : ""}>
                 <p>${toDo.toDoTitle}</p>
                 <div class="icons">
-                    <i class="fa-regular fa-pen-to-square" "edit"></i>
-                    <i class="fa-solid fa-trash" "trash"></i>
+                    <button class = "edit"><i class="fa-regular fa-pen-to-square" "edit"></i></button>
+                    <button class = "trash"><i class="fa-solid fa-trash"></i></button>
                 </div>
-            </div>`
+            </div>`;
+            taskList.appendChild(listItem);
 
-            function deleteToDos() {
-                const deleteButton = document.querySelector('.trash');
-                deleteButton.addEventListener('click', function() {
-                    taskManager.deleteToDo(index);
-                    this.renderToDos();
-                })
-            };
+            const deleteButton = document.querySelector('.trash');
+            deleteButton.addEventListener('click', function() {
+                taskManager.deleteToDo(index);
+                renderToDos();
+            })
         })
-    },
+    };
 
-    appendToDos() {
-        const toDoTitle = document.querySelector('.inputToDo').value;
+    const appendToDos = function() {
         const appendButton = document.querySelector('#appendNewTaskButton');
         appendButton.addEventListener('click', function() {
-            taskManager.addToDo(toDoTitle);
-            this.renderToDos();
-        })
-    },
+            const toDoTitle = (document.querySelector('.inputToDo')).value;
+            if (toDoTitle.trim()) {
+                taskManager.addToDo(toDoTitle);
+                renderToDos();
+            }
+        });
+    };
 
 
-    updateProgressBar() {
-        // in relation to the number of completed tasks / number of total tasks
-    }
-}
+    const initialize = function() {
+        renderToDos();
+        appendToDos();
+    };
+
+    return { initialize }
+})();
 
 export default DOMManipulator
