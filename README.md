@@ -1,6 +1,6 @@
-# ToDo App
+# To Do Website
 
-A simple ToDo application built with vanilla JavaScript, demonstrating CRUD operations with localStorage persistence and a progress indicator.
+A To Do website built with vanilla JavaScript, demonstrating CRUD operations with localStorage persistence and a progress indicator.
 
 ## Features
 
