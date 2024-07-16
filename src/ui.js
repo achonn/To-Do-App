@@ -60,13 +60,14 @@ const DOMManipulator = (function(){
         const appendButton = document.querySelector('#appendNewTaskButton');
         appendButton.addEventListener('click', (event) => {
             event.preventDefault();
-            const toDoTitle = document.querySelector('.inputToDo').value;
-            if (toDoTitle.trim()) {
-                taskManager.addToDo(toDoTitle);
+            const toDoTitle = document.querySelector('.inputToDo');
+            if (toDoTitle.value.trim()) {
+                taskManager.addToDo(toDoTitle.value);
+                toDoTitle.value = '';
                 renderToDos();
+                updateProgressBar();
             }
         });
-        updateProgressBar();
     };
 
     const updateProgressBar = function() {
