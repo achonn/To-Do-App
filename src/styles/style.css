@@ -125,6 +125,7 @@ button:hover {
     padding: 10px;
     border-radius: 10px;
     justify-content: space-between;
+    margin-top: 10px;
 }
 
 .taskList {
@@ -177,4 +178,14 @@ button:hover {
 .edit:hover {
     color: rgb(28, 174, 237);
     transform: scale(1.05);
+}
+
+.checkbox {
+    transition: all 0.4s ease;
+}
+
+.checkbox:hover {
+    box-shadow: 0 0 15px lightgreen;
+    letter-spacing: 0.25 rem;
+    transform: scale(1.03);
 }
